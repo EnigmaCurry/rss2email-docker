@@ -7,8 +7,7 @@ RUN useradd -ms /bin/bash rss2email
 RUN apt-get update
 RUN apt-get install -y ssmtp python3-pip
 
-ADD rss2email.crontab /tmp/
-RUN crontab -u rss2email /tmp/rss2email.crontab
+RUN echo "0 * * * * /usr/local/bin/r2e run" | crontab -u rss2email -
 RUN mkdir /home/rss2email/.config && \
     ln -s /home/rss2email/.rss2email/rss2email.cfg /home/rss2email/.config/rss2email.cfg && \
     chown -R rss2email:rss2email /home/rss2email/.config
